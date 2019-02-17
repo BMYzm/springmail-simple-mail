@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+	<context:component-scan base-package="top.weweb.hawk.mailx"></context:component-scan>
+	
+	<!-- 如果你在其他spring容器使用了property-placeholder，请把下面的配置移到父容器，否则可能出现异常 -->
+	<context:property-placeholder location="classpath:mail.properties"/>
+	
+	<!-- 163 mailSender -->
+	<bean id="163MailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+       <property name="host" value="${163.mail.host}"></property>
+       <property name="port" value="${163.mail.port}"></property>
+       <property name="username" value="${163.mail.username}"></property>
+       <property name="password" value="${163.mail.password}"></property>
+       <property name="defaultEncoding" value="UTF-8"></property>
+       <property name="javaMailProperties">
+           <props>
+              <prop key="mail.smtp.auth">true</prop>
+              <prop key="mail.smtp.timeout">25000</prop>
+              <prop key="mail.smtp.socketFactory.class">javax.net.ssl.SSLSocketFactory</prop>
+              <!-- 如果是网易邮箱， mail.smtp.starttls.enable 设置为 false-->  
+              <prop key="mail.smtp.starttls.enable">false</prop>
+           </props>
+       </property>
+    </bean>
+    <!-- qq mailSender -->
+   	<bean id="qqMailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+       <property name="host" value="${qq.mail.host}"></property>
+       <property name="port" value="${qq.mail.port}"></property>
+       <property name="username" value="${qq.mail.username}"></property>
+       <property name="password" value="${qq.mail.password}"></property>
+       <property name="defaultEncoding" value="UTF-8"></property>
+       <property name="javaMailProperties">
+           <props>
+              <prop key="mail.smtp.auth">true</prop>
+              <prop key="mail.smtp.timeout">25000</prop>
+              <prop key="mail.smtp.socketFactory.class">javax.net.ssl.SSLSocketFactory</prop>
+              <!-- 如果是网易邮箱， mail.smtp.starttls.enable 设置为 false-->  
+              <prop key="mail.smtp.starttls.enable">true</prop>
+           </props>
+       </property>
+    </bean>
+</beans>
