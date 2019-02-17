@@ -93,9 +93,8 @@
 > 请直接复制<import>结点，除非必要不要更改
 
 ```xml
-	spring.xml
 	<!-- 导入其他组件的spring -->
-    <import resource="classpath*:spring-mailx.xml"/>
+	<import resource="classpath*:spring-mailx.xml"/>
 
   	<bean id="xxx" class="xxx.xxxx">
 		...
