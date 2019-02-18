@@ -37,11 +37,11 @@
 
 #### 1.不使用Spring容器
 
-> 这是最简单的方式，直接可以创建mimeMail
+> - 这是**最简单**的方式，直接可以创建mimeMail
 >
-> 这样只需要在需要的时候用初始化的MimeMail send方法发送邮件即可
+> - 这样只需要在需要的时候用初始化的MimeMail send方法发送邮件即可
 >
-> **注意 :** 使用这种方式的话，需要配置`mail.properties`文件中的等号（====）下面的内容，*最下面三行内容不要更改*。
+> - **注意 :** 使用这种方式的话，需要配置`mail.properties`文件中的等号（====）下面的内容，*最下面三行内容不要更改*。
 
 ```java
 	/**
@@ -67,7 +67,7 @@
 	/**
 	 * common mail 重载方法，其他方法调用此方法来实现send mail<br/>
 	 * <strong>发邮件的所有方法必须调用此方法来发送！！！</strong></br>
-	 * 	如果你配置了两个mailSender，将会自动切换发送，若只有一个，请务必修改将不用的发送器从spring-mailx.xml中删除
+	 * 	如果你配置了两个mailSender，将会自动切换发送，若只有一个，请务必将不用的发送器从spring-mailx.xml中删除
 	 * 
 	 * @param to 收件人地址，List接口形式，支持群发
 	 * @param subject 邮件主题
@@ -88,12 +88,12 @@
 
 中导入`simple mail`内的`spring-mailx.xml`配置文件，这样当前项目就可以使用`MimeMail`发送邮件了，在需要用的地方使用`@Autowired`注入就可以使用了。
 
-**在上层项目的spring.xml中导入的例子**
+**在上层项目的spring.xml中导Mail组件的Spring容器**
 
 > 请直接复制<import>结点，除非必要不要更改
 
 ```xml
-	<!-- 导入其他组件的spring -->
+	<!-- 导入邮件组件的spring -->
 	<import resource="classpath*:spring-mailx.xml"/>
 
   	<bean id="xxx" class="xxx.xxxx">
@@ -101,9 +101,9 @@
 	</bean>
 ```
 
-> **注意 :**如果使用上层容器，两个容器内不要同时有`<context:property-placeholder location="xx"/>`
-
-，讲这个结点放到顶层`spring.xml`中
+> **易错注意 :** 
+>
+> - 如果使用上层容器，两个容器内不要同时有`<context:property-placeholder location="xx"/>`，将这个结点放到顶层`spring.xml`中
 
 ### 问题反馈
 
