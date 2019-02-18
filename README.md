@@ -84,7 +84,7 @@
 
 > 这种方式也简单易用，速度上也比上种有显著提升
 
-​	将本项目打包或者在顶部的releases[下载`Jar`包](releases)，将`Jar`包导入到需要使用邮件的工程中，在工程的`spring.xml`中`import`
+​	将本项目打包或者在顶部的releases[下载`Jar`包](/releases)，将`Jar`包导入到需要使用邮件的工程中，在工程的`spring.xml`中`import`
 
 中导入`simple mail`内的`spring-mailx.xml`配置文件，这样当前项目就可以使用`MimeMail`发送邮件了，在需要用的地方使用`@Autowired`注入就可以使用了。
 
