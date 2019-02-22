@@ -68,17 +68,17 @@ public class MimeMail {
 			MimeMessageHelper messageHelper=new MimeMessageHelper(mimeMessage, true);
 			// 注意下面的是Text+something,Text是传入的等待发送的内容，后面部分是固定格式，比如说“本邮件自动发送，请勿回复”
 			//		可以根据需要自行更改固定内容
-			String formatText = Text+"<p>本邮件自动发送，请勿回复</p><a href='http://www.weweb.top'><img src='cid:img' style='height:100px;'/></a>";
+			String formatText = Text+"<p>本邮件自动发送，请勿回复</p>";
 			//这个是附带发送的图片。不需要可以去掉，但是需要把固定内容的cid:img一起去掉，这是标志位
-			ClassPathResource resource=new ClassPathResource("hawk_logo2.png");
 			String[] toArray=new String[to.size()];
 			to.toArray(toArray);
 			messageHelper.setFrom(mailSender.getUsername());
 			messageHelper.setBcc(toArray);
 			messageHelper.setSubject(subject);
 			messageHelper.setText(formatText,true);
-			//这个是附带发送的图片，不用可以自行去掉
-			messageHelper.addInline("img", resource);
+			//下面两行可以附带发送的图片
+//			ClassPathResource resource=new ClassPathResource("hawk_logo2.png");
+//			messageHelper.addInline("img", resource);
 			//下面一行可以添加附件
 //			messageHelper.addAttachment(attachmentFilename, file);
 			mailSender.send(mimeMessage);
@@ -158,8 +158,42 @@ public class MimeMail {
 		public Builder() {
 			// TODO Auto-generated constructor stub
 		}
+		/**
+		 * 	不使用自带Spring容器的情况下获取MailSender实例<br/><strong>最简单的方式，无需修改配置</strong>
+		 * @param host 		邮箱服务器 			如：smtp.163.com
+		 * @param protocol 	mail.protocol 	如：smtp
+		 * @param port		邮箱服务器端口号		如：465
+		 * @param username	邮箱账号			如：xxxxxxx@163.com
+		 * @param password	邮箱授权码			-
+		 * @param smtpStarttlsEnable 163邮箱建议设置 false
+		 * @return
+		 */
+		public static MimeMail initMailSender(String host,String protocol,Integer port,String username,String password,Boolean smtpStarttlsEnable) {
+			JavaMailSenderImpl javaMailSenderImpl = new JavaMailSenderImpl();
+			javaMailSenderImpl.setHost(host);
+			javaMailSenderImpl.setProtocol(protocol);
+			javaMailSenderImpl.setPort(port);
+			javaMailSenderImpl.setUsername(username);
+			javaMailSenderImpl.setPassword(password);
+			javaMailSenderImpl.setDefaultEncoding("UTF-8");
+			Properties properties = new Properties();
+			properties.put("mail.smtp.starttls.enable", smtpStarttlsEnable);//163邮箱推荐false
+			properties.put("mail.smtp.auth", true);
+			properties.put("mail.smtp.timeout", 25000);
+			properties.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+			javaMailSenderImpl.setJavaMailProperties(properties);
+			MimeMail mimeMail = new MimeMail();
+			mimeMail.setQqMailSender(javaMailSenderImpl);
+			return mimeMail;
+		}
 		
-		public static MimeMail initMailSender() throws IOException {
+		/**
+		 *	不使用自带Spring容器的情况下获取MailSender实例<br/><strong>需要更改mail.properties最下面的配置</strong><br/>
+		 *	
+		 * @return
+		 * @throws IOException
+		 */
+		public static MimeMail initMailSenderWithProperties() throws IOException {
 			Properties properties = new Properties();
 			ClassPathResource resource = new ClassPathResource("mail.properties");
 			properties.load(resource.getInputStream());

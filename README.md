@@ -13,6 +13,8 @@
 
 ### 1.设置发件箱的域名和密码
 
+> 如果你不想使用配置文件，只想使用编码方式快速开始，可以略过这一部分，确保`开启你的邮箱的POP3/SMTP/IMAP`之后，直接看下面的`1.1不使用properties（最简单的方式）`或`1.2使用properties`
+
 **src\main\resources\mail.properties** 
 
 ​	1. 参照现有的配置，修改这个文件，填入你的发件箱，建议你163和QQ邮箱都配置上，这样，如果发送失败，程序会自动切换发送器重发，保证成功率，而且切换过程用户没有察觉。
@@ -35,32 +37,52 @@
 
 > 可以使用两种方式快速上手使用
 
-#### 1.不使用Spring容器
+#### 1.1 不使用Spring容器、不使用配置文件（最简单的方式）
 
 > - 这是**最简单**的方式，直接可以创建mimeMail
->
 > - 这样只需要在需要的时候用初始化的MimeMail send方法发送邮件即可
->
-> - **注意 :** 使用这种方式的话，需要配置`mail.properties`文件中的等号（====）下面的内容，*最下面三行内容不要更改*。
+> - **注意：**`1.1`和`1.2`都只能添加一种发送器，但是遇到错误会重试一次。相比`2.使用Spring容器（推荐）`的方式（两个发送器），稳定性稍差。
 
 ```java
-	/**
-	 * 下面是一个简单的例子，测试发送。<strong>这是最简单的方式</strong>
-	 *  - 不使用spring容器如何发送邮件
-	 *  	- 弊端：1.发送速度慢，需要几秒钟的时间加载资源
-	 *  		   2.这种方式默认只拥有一个发送器，容错率不高
+/**
+	 * 	下面是一个简单的例子，测试发送。<strong>这是最简单的方式</strong> - 不使用spring容器如何发			送邮件 -
+	 * 	弊端：1.发送速度慢，需要几秒钟的时间加载资源 2.这种方式默认只拥有一个发送器，容错率不高
+	 * 
 	 * @throws IOException
 	 * @throws MailAddressException 自定义异常，邮件地址不正确
 	 */
 	@Test
-	public void testSend() throws IOException, MailAddressException {
-		MimeMail mimeMail = MimeMail.Builder.initMailSender();
-		List<String> to = new ArrayList<String>();//收件人集合
+	public void testSendSimple() throws MailAddressException {
+		MimeMail mimeMail = MimeMail.Builder.initMailSender("smtp.163.com", "smtp", 				465, "hongshuboy@163.com","你的客户端授权码", false);
+		List<String> to = new ArrayList<String>();// 收件人集合
 		to.add("hongshuboy@qq.com");
-		mimeMail.sendMail(to, "你有新消息", "请到网站内查看");
+        //密集发送时，163会报554 DT:SPM异常
+		mimeMail.sendMail(to, "你有新的消息", "请到网站内查看"+new Date());
 	}
 ```
 
+#### 1.2  不使用Spring容器、使用配置文件
+
+> - 这样只需要在需要的时候用初始化的MimeMail send方法发送邮件即可
+> - **注意 :** 使用这种方式的话，需要配置`mail.properties`文件中的等号（====）下面的内容，*最下面三行内容不要更改*。
+
+```java
+/**
+ * 下面是一个简单的例子，测试发送。<strong>这是最简单的方式</strong>
+ *  - 不使用spring容器如何发送邮件
+ *  	- 弊端：1.发送速度慢，需要几秒钟的时间加载资源
+ *  		   2.这种方式默认只拥有一个发送器，容错率不高
+ * @throws IOException
+ * @throws MailAddressException 自定义异常，邮件地址不正确
+ */
+@Test
+public void testSend() throws IOException, MailAddressException {
+	MimeMail mimeMail = MimeMail.Builder.initMailSenderWithProperties();
+	List<String> to = new ArrayList<String>();//收件人集合
+	to.add("hongshuboy@qq.com");
+	mimeMail.sendMail(to, "你有新消息", "请到网站内查看");
+}
+```
 我们来看一下调用sendMail方法的具体参数是什么意思
 
 ```java
