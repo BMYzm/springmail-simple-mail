@@ -43,9 +43,11 @@
 > - 这样只需要在需要的时候用初始化的MimeMail send方法发送邮件即可
 > - **注意：**`1.1`和`1.2`都只能添加一种发送器，但是遇到错误会重试一次。相比`2.使用Spring容器（推荐）`的方式（两个发送器），稳定性稍差。
 
+将本项目使用Maven打包或者到releases[下载`Jar`包](https://github.com/hongshuboy/springmail-simple-mail/releases)
+
 ```java
 /**
-	 * 	下面是一个简单的例子，测试发送。<strong>这是最简单的方式</strong> - 不使用spring容器如何发			送邮件 -
+	 * 	下面是一个简单的例子，测试发送。<strong>这是最简单的方式</strong> - 不使用spring容器如何发送邮件 -
 	 * 	弊端：1.发送速度慢，需要几秒钟的时间加载资源 2.这种方式默认只拥有一个发送器，容错率不高
 	 * 
 	 * @throws IOException
@@ -53,7 +55,7 @@
 	 */
 	@Test
 	public void testSendSimple() throws MailAddressException {
-		MimeMail mimeMail = MimeMail.Builder.initMailSender("smtp.163.com", "smtp", 				465, "hongshuboy@163.com","你的客户端授权码", false);
+		MimeMail mimeMail = MimeMail.Builder.initMailSender("smtp.163.com", "smtp",465, "hongshuboy@163.com","你的客户端授权码", false);
 		List<String> to = new ArrayList<String>();// 收件人集合
 		to.add("hongshuboy@qq.com");
         //密集发送时，163会报554 DT:SPM异常
@@ -106,7 +108,7 @@ public void testSend() throws IOException, MailAddressException {
 
 > 这种方式也简单易用，速度上也比上种有显著提升
 
-​	将本项目使用Maven打包或者转到顶部的releases，[下载`Jar`包](https://github.com/hongshuboy/springmail-simple-mail/releases)，将`Jar`包导入到需要使用邮件的工程中，在工程的`spring.xml`中`import`
+​	将本项目使用Maven打包，将`Jar`包导入到需要使用邮件的工程中，在工程的`spring.xml`中`import`
 
 中导入`simple mail`内的`spring-mailx.xml`配置文件，这样当前项目就可以使用`MimeMail`发送邮件了，在需要用的地方使用`@Autowired`注入就可以使用了。
 
