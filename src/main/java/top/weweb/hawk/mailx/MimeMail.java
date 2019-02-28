@@ -43,13 +43,13 @@ public class MimeMail {
 	 * @param retry 是否是重新尝试
 	 * @return boolean 是否发送成功
 	 * @throws MessagingException 邮件发送异常
-	 * @throws MailAddressException 自定义异常
+	 * @throws UnknownMailAddressException 自定义异常
 	 */
-	private boolean sendMail(List<String> to,String subject,String Text,boolean retry) throws MailAddressException {
+	private boolean sendMail(List<String> to,String subject,String Text,boolean retry) throws UnknownMailAddressException {
 		//合法性检查
 		for (String stringto : to) {
 			if (!MailUtil.isMailAddr(stringto)) {
-				throw new MailAddressException();
+				throw new UnknownMailAddressException();
 			}
 		}
 		//retry -尝试使用QQ Mail重发
@@ -103,9 +103,9 @@ public class MimeMail {
 	 * @param subject 邮件主题
 	 * @param Text 邮件内容（邮件的尾巴部分会自动补上），可以去上面的重载方法自行定制尾巴
 	 * @return boolean 是否发送成功
-	 * @throws MailAddressException
+	 * @throws UnknownMailAddressException
 	 */
-	public boolean sendMail(List<String> to,String subject,String Text) throws MailAddressException {
+	public boolean sendMail(List<String> to,String subject,String Text) throws UnknownMailAddressException {
 		return sendMail(to, subject, Text, false);
 	}
 	
@@ -117,9 +117,9 @@ public class MimeMail {
 	 * @param num 验证码随机数的位数
 	 * @return vCode 生成的验证码
 	 * @throws MessagingException 邮件发送异常
-	 * @throws MailAddressException 自定义异常
+	 * @throws UnknownMailAddressException 自定义异常
 	 */
-	public String sendVCode(List<String> to,int num) throws MessagingException, MailAddressException {
+	public String sendVCode(List<String> to,int num) throws MessagingException, UnknownMailAddressException {
 		String vCode=MailUtil.getVCode(num);
 		String formatText = MessageFormat.format("<h2>你的验证码是：{0}</h2>",vCode );
 		this.sendMail(to,"Hawk:验证码在此，请查收",formatText);
