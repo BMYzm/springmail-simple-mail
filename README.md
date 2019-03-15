@@ -114,12 +114,17 @@ public void testSend() throws IOException, MailAddressException {
 
 > 这种方式也简单易用，速度上也比上种有显著提升
 
- 	1. 使用git clone项目到本地
- 	2. 修改`src\main\resources`下的mail.properties（配置等号上面的内容）（如果你只需要一个发送器，可以只配置一个，并且必须执行`第三步`）
- 	3. （optional）修改`src\main\resources`下的spring-mailx.xml（如果你在`2`中只配置了一个发送器，这里需要删除多余的那个）
- 	4. （optional）如果你需要发送附件或者在邮件中显示图片，请将附件或者图片放在`src\main\resources`下，并且修改`top\weweb\hawk\mailx\MimeMail.sendMail(List<String> to,String subject,String Text,boolean retry)`对应部分的源码（注释的很清楚）
- 	5. 使用Maven重新打包项目（请跳过Maven Test，或者删除`src\test`下的`java`文件）
- 	6. 将`Jar`包导入到需要使用邮件的工程中，在工程的`spring.xml`中`import`中导入`simple mail`内的`spring-mailx.xml`配置文件，这样当前项目就可以使用`MimeMail`发送邮件了，在需要用的地方使用`@Autowired`注入就可以使用了。
+1. 使用git clone项目到本地
+
+2. 修改`src\main\resources`下的mail.properties（配置等号上面的内容）（如果你只需要一个发送器，可以只配置一个，并且必须执行`第三步`）
+
+3. （optional）修改`src\main\resources`下的spring-mailx.xml（如果你在`2`中只配置了一个发送器，这里需要删除多余的那个）
+
+4. （optional）如果你需要发送附件或者在邮件中显示图片，请将附件或者图片放在`src\main\resources`下，并且修改`top\weweb\hawk\mailx\MimeMail.sendMail(List<String> to,String subject,String Text,boolean retry)`对应部分的源码（注释的很清楚）
+
+5. 使用Maven重新打包项目（请跳过Maven Test，或者删除`src\test`下的`java`文件）
+
+6. 将`Jar`包导入到需要使用邮件的工程中，在工程的`spring.xml`中`import`中导入`simple mail`内的`spring-mailx.xml`配置文件，这样当前项目就可以使用`MimeMail`发送邮件了，在需要用的地方使用`@Autowired`注入就可以使用了。
 
 **在上层项目的spring.xml中导Mail组件的Spring容器的方法**
 
