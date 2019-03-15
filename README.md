@@ -43,7 +43,7 @@
 
 #### 1.0 不使用Spring容器的两种方式
 
-> **注意：**如果你不使用Spring容器，使用`1.1`和`1.2`的方式，那么你需要**额外**将/[dependencies](https://github.com/hongshuboy/springmail-simple-mail/tree/master/dependencies)下的所有Jar包添加到项目中
+> **注意：** 如果你不使用Spring容器，使用`1.1`和`1.2`的方式，那么你需要 **额外** 将/[dependencies](https://github.com/hongshuboy/springmail-simple-mail/tree/master/dependencies)下的所有Jar包添加到项目中
 
 #### 1.1 不使用Spring容器、不使用配置文件（最简单的方式）
 
