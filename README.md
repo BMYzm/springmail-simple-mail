@@ -23,7 +23,7 @@
 
 **开启你的邮箱的POP3/SMTP/IMAP**
 
-​	要使用java mail，请先在邮箱设置中开启POP3/SMTP/IMAP，***配置的密码不是你的登录密码***，以163邮箱为例，同样在设置中选择客户端授权密码，获取一份授权密码，放在配置文件*（src\main\resources\mail.properties）*的`mail.password`位置。
+​	要使用java mail，请先在邮箱设置中开启POP3/SMTP/IMAP，***配置的密码不是你的登录密码***，以163邮箱为例，同样在设置中选择客户端授权密码，获取一份授权密码，放在配置文件 *（src\main\resources\mail.properties）* 的`mail.password`位置。
 
 ***A:如果你只在其中配置了一个邮箱***
 
