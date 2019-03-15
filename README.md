@@ -33,17 +33,23 @@
 
 ----
 
+# 下载依赖Jar包
+
+* 将本项目使用Maven打包或者到releases[下载`Jar`包](https://github.com/hongshuboy/springmail-simple-mail/releases)
+
 ## 简单的配置之后终于可以开始测试了
 
 > 可以使用两种方式快速上手使用
+
+#### 1.0 不使用Spring容器的两种方式
+
+> **注意：**如果你不使用Spring容器，使用`1.1`和`1.2`的方式，那么你需要**额外**将/[dependencies](https://github.com/hongshuboy/springmail-simple-mail/tree/master/dependencies)下的所有Jar包添加到项目中
 
 #### 1.1 不使用Spring容器、不使用配置文件（最简单的方式）
 
 > - 这是**最简单**的方式，直接可以创建mimeMail
 > - 这样只需要在需要的时候用初始化的MimeMail send方法发送邮件即可
 > - **注意：**`1.1`和`1.2`都只能添加一种发送器，但是遇到错误会重试一次。相比`2.使用Spring容器（推荐）`的方式（两个发送器），稳定性稍差。
-
-将本项目使用Maven打包或者到releases[下载`Jar`包](https://github.com/hongshuboy/springmail-simple-mail/releases)
 
 ```java
 /**
